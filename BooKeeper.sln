@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooKeeper.UIClassic", "BooK
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooKeeper.UIClassic.Android", "BooKeeper.UIClassic.Android\BooKeeper.UIClassic.Android.csproj", "{848BB878-B9F4-49FD-9ED7-92D3A5B0D327}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooKeeper.UIClassic.iOS", "BooKeeper.UIClassic.iOS\BooKeeper.UIClassic.iOS.csproj", "{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,16 @@ Global
 		{848BB878-B9F4-49FD-9ED7-92D3A5B0D327}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{848BB878-B9F4-49FD-9ED7-92D3A5B0D327}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{848BB878-B9F4-49FD-9ED7-92D3A5B0D327}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
+		{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6}.Debug|iPhone.Build.0 = Debug|iPhone
+		{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6}.Release|Any CPU.ActiveCfg = Release|iPhone
+		{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6}.Release|iPhone.ActiveCfg = Release|iPhone
+		{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6}.Release|iPhone.Build.0 = Release|iPhone
+		{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,6 +154,7 @@ Global
 		{A97A661F-0AFF-4F7D-974C-FD59ACE0D6EB} = {0501EBCE-6EA7-4EFE-AFD9-E74086692256}
 		{3CC68385-FD8D-4007-8D6B-B6A45DC79928} = {30CE4543-C1C5-4977-B901-70255C943ACC}
 		{848BB878-B9F4-49FD-9ED7-92D3A5B0D327} = {30CE4543-C1C5-4977-B901-70255C943ACC}
+		{81A796B7-7A19-45BC-A8AF-BAFB46B4C4A6} = {30CE4543-C1C5-4977-B901-70255C943ACC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {40DE648B-487E-4577-85CB-0CD715E1B301}
