@@ -8,6 +8,7 @@ namespace BooKeeper.Web.Data.Entities
 {
     public class Book
     {
+        [Key]
         public string Isbn { get; set; }
         public int IdCategory { get; set; }
         public string Title { get; set; }
