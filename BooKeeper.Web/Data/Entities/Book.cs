@@ -10,7 +10,7 @@ namespace BooKeeper.Web.Data.Entities
     {
         [Key]
         public string Isbn { get; set; }
-        public int IdCategory { get; set; }
+        public Category IdCategory { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
         public DateTime Date { get; set; }
