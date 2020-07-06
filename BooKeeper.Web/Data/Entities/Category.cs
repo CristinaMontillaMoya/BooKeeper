@@ -10,7 +10,10 @@ namespace BooKeeper.Web.Data.Entities
     public class Category
     {
         [Key]
-        public int Id { get; set; }
+        public int IdCategory { get; set; }
+
+        [MaxLength (30, ErrorMessage = "The field {0} only can contain {1} characters length")]
+        [Required]
         public string Name { get; set; }
     }
 }
