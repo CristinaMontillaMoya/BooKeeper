@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BooKeeper.Web.Data.Entities
 {
-    [Table("Sale")]
     public class Sale
     {
         [Key]
@@ -20,6 +19,7 @@ namespace BooKeeper.Web.Data.Entities
         public int IdUser { get; set; }
         public string Telephone { get; set; }
         public string DeliveryData { get; set; }
+        public virtual User User { get; set; }
 
     }
 }

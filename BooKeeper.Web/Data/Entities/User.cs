@@ -10,7 +10,7 @@ namespace BooKeeper.Web.Data.Entities
     public class User
     {
         [Key]
-        public int Id { get; set; }
+        public int IdUser { get; set; }
 
         [MaxLength(30, ErrorMessage = "The field {0} only can contain {1} characters")]
         [Required]
