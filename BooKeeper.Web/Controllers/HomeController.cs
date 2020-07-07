@@ -51,7 +51,7 @@ namespace BooKeeper.Web.Controllers
             }
             else
             {
-                Console.WriteLine(testBook.Category);
+                Console.WriteLine(testBook.IdCategory);
             }
             return View();
         }
