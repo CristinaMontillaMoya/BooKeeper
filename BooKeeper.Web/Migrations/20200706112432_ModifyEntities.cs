@@ -35,7 +35,7 @@ namespace BooKeeper.Web.Migrations
                 oldNullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "CategoryIdCategory",
+                name: "IdCategory1",
                 table: "Books",
                 nullable: true);
 
@@ -80,14 +80,14 @@ namespace BooKeeper.Web.Migrations
                     IdUser = table.Column<int>(nullable: false),
                     Telephone = table.Column<string>(nullable: true),
                     DeliveryData = table.Column<string>(nullable: true),
-                    UserIdUser = table.Column<int>(nullable: true)
+                    IdUser1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sales", x => x.SaleId);
                     table.ForeignKey(
-                        name: "FK_Sales_Users_UserIdUser",
-                        column: x => x.UserIdUser,
+                        name: "FK_Sales_Users_IdUser1",
+                        column: x => x.IdUser1,
                         principalTable: "Users",
                         principalColumn: "IdUser",
                         onDelete: ReferentialAction.Restrict);
@@ -97,18 +97,17 @@ namespace BooKeeper.Web.Migrations
                 name: "SaleDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    IdSaleDetail = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SaleId = table.Column<int>(nullable: false),
-                    Isbn = table.Column<string>(nullable: true),
-                    BookIsbn = table.Column<string>(nullable: true)
+                    Isbn = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SaleDetails", x => x.Id);
+                    table.PrimaryKey("PK_SaleDetails", x => x.IdSaleDetail);
                     table.ForeignKey(
-                        name: "FK_SaleDetails_Books_BookIsbn",
-                        column: x => x.BookIsbn,
+                        name: "FK_SaleDetails_Books_IsbnBookIsbn",
+                        column: x => x.Isbn,
                         principalTable: "Books",
                         principalColumn: "Isbn",
                         onDelete: ReferentialAction.Restrict);
@@ -121,14 +120,14 @@ namespace BooKeeper.Web.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Books_CategoryIdCategory",
+                name: "IX_Books_IdCategory1",
                 table: "Books",
-                column: "CategoryIdCategory");
+                column: "IdCategory1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SaleDetails_BookIsbn",
+                name: "IX_SaleDetails_IsbnBookIsbn",
                 table: "SaleDetails",
-                column: "BookIsbn");
+                column: "IsbnBookIsbn");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SaleDetails_SaleId",
@@ -136,14 +135,14 @@ namespace BooKeeper.Web.Migrations
                 column: "SaleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sales_UserIdUser",
+                name: "IX_Sales_IdUser1",
                 table: "Sales",
-                column: "UserIdUser");
+                column: "IdUser1");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Books_Categories_CategoryIdCategory",
+                name: "FK_Books_Categories_IdCategory1",
                 table: "Books",
-                column: "CategoryIdCategory",
+                column: "IdCategory1",
                 principalTable: "Categories",
                 principalColumn: "IdCategory",
                 onDelete: ReferentialAction.Restrict);
@@ -152,7 +151,7 @@ namespace BooKeeper.Web.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Books_Categories_CategoryIdCategory",
+                name: "FK_Books_Categories_IdCategory1",
                 table: "Books");
 
             migrationBuilder.DropTable(
@@ -168,11 +167,11 @@ namespace BooKeeper.Web.Migrations
                 name: "Users");
 
             migrationBuilder.DropIndex(
-                name: "IX_Books_CategoryIdCategory",
+                name: "IX_Books_IdCategory1",
                 table: "Books");
 
             migrationBuilder.DropColumn(
-                name: "CategoryIdCategory",
+                name: "IdCategory1",
                 table: "Books");
 
             migrationBuilder.AlterColumn<string>(

@@ -29,13 +29,13 @@ namespace BooKeeper.Web.Migrations
                         .HasColumnType("nvarchar(75)")
                         .HasMaxLength(75);
 
-                    b.Property<int?>("CategoryIdCategory")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("IdCategory")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdCategory1")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
@@ -58,7 +58,7 @@ namespace BooKeeper.Web.Migrations
 
                     b.HasKey("Isbn");
 
-                    b.HasIndex("CategoryIdCategory");
+                    b.HasIndex("IdCategory1");
 
                     b.ToTable("Books");
                 });
@@ -100,6 +100,9 @@ namespace BooKeeper.Web.Migrations
                     b.Property<int>("IdUser")
                         .HasColumnType("int");
 
+                    b.Property<int?>("IdUser1")
+                        .HasColumnType("int");
+
                     b.Property<string>("Province")
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
@@ -107,35 +110,32 @@ namespace BooKeeper.Web.Migrations
                     b.Property<string>("Telephone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserIdUser")
-                        .HasColumnType("int");
-
                     b.HasKey("SaleId");
 
-                    b.HasIndex("UserIdUser");
+                    b.HasIndex("IdUser1");
 
                     b.ToTable("Sales");
                 });
 
             modelBuilder.Entity("BooKeeper.Web.Data.Entities.SaleDetail", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IdSaleDetail")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BookIsbn")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Isbn")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IsbnBookIsbn")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("SaleId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdSaleDetail");
 
-                    b.HasIndex("BookIsbn");
+                    b.HasIndex("IsbnBookIsbn");
 
                     b.HasIndex("SaleId");
 
@@ -174,23 +174,23 @@ namespace BooKeeper.Web.Migrations
 
             modelBuilder.Entity("BooKeeper.Web.Data.Entities.Book", b =>
                 {
-                    b.HasOne("BooKeeper.Web.Data.Entities.Category", "Category")
+                    b.HasOne("BooKeeper.Web.Data.Entities.Category", "Id")
                         .WithMany()
-                        .HasForeignKey("CategoryIdCategory");
+                        .HasForeignKey("IdCategory1");
                 });
 
             modelBuilder.Entity("BooKeeper.Web.Data.Entities.Sale", b =>
                 {
-                    b.HasOne("BooKeeper.Web.Data.Entities.User", "User")
+                    b.HasOne("BooKeeper.Web.Data.Entities.User", "Id")
                         .WithMany()
-                        .HasForeignKey("UserIdUser");
+                        .HasForeignKey("IdUser1");
                 });
 
             modelBuilder.Entity("BooKeeper.Web.Data.Entities.SaleDetail", b =>
                 {
-                    b.HasOne("BooKeeper.Web.Data.Entities.Book", "Book")
+                    b.HasOne("BooKeeper.Web.Data.Entities.Book", "IsbnBook")
                         .WithMany()
-                        .HasForeignKey("BookIsbn");
+                        .HasForeignKey("IsbnBookIsbn");
 
                     b.HasOne("BooKeeper.Web.Data.Entities.Sale", "Sale")
                         .WithMany()
