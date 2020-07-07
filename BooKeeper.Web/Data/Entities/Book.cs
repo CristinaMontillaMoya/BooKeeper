@@ -13,7 +13,7 @@ namespace BooKeeper.Web.Data.Entities
         public string Isbn { get; set; }
 
         public int IdCategory { get; set; }
-        public virtual Category Category { get; set; }
+        public virtual Category Id { get; set; }
 
         [MaxLength(100, ErrorMessage = "The field {0} only can contain {1} characters length.")]
         [Required]

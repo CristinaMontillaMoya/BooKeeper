@@ -19,7 +19,7 @@ namespace BooKeeper.Web.Data.Entities
         public int IdUser { get; set; }
         public string Telephone { get; set; }
         public string DeliveryData { get; set; }
-        public virtual User User { get; set; }
+        public virtual User Id { get; set; }
 
     }
 }

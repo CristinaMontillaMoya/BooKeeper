@@ -9,6 +9,10 @@
     <Compile Remove="Migrations\20200706102826_ModifyEntities.Designer.cs" />
     <Compile Remove="Migrations\20200706103532_ModifyContext.cs" />
     <Compile Remove="Migrations\20200706103532_ModifyContext.Designer.cs" />
+    <Compile Remove="Migrations\20200706105013_ModifyEntities.cs" />
+    <Compile Remove="Migrations\20200706105013_ModifyEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200706112902_Prueba1.cs" />
+    <Compile Remove="Migrations\20200706112902_Prueba1.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

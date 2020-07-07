@@ -9,11 +9,11 @@ namespace BooKeeper.Web.Data.Entities
     public class SaleDetail
     {
         [Key]
-        public int Id { get; set; }
+        public int IdSaleDetail { get; set; }
         public int SaleId { get; set; }
         public string Isbn { get; set; }
         public virtual Sale Sale { get; set; }
-        public virtual Book Book { get; set; }
+        public virtual Book IsbnBook { get; set; }
 
     }
 }
