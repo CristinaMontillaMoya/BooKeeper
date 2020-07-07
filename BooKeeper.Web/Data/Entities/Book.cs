@@ -10,10 +10,13 @@ namespace BooKeeper.Web.Data.Entities
     public class Book
     {
         [Key]
+        [MaxLength(450)]
         public string Isbn { get; set; }
 
+        [ForeignKey("CategoryFK")]
         public int IdCategory { get; set; }
-        public virtual Category Id { get; set; }
+
+        public virtual Category CategoryFK { get; set; }
 
         [MaxLength(100, ErrorMessage = "The field {0} only can contain {1} characters length.")]
         [Required]

@@ -3,42 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BooKeeper.Web.Migrations
 {
-    public partial class ModifyEntities : Migration
+    public partial class InitialDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
-                table: "Books",
-                maxLength: 100,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Synopsis",
-                table: "Books",
-                maxLength: 255,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Author",
-                table: "Books",
-                maxLength: 75,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.AddColumn<int>(
-                name: "IdCategory1",
-                table: "Books",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -69,6 +37,31 @@ namespace BooKeeper.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Books",
+                columns: table => new
+                {
+                    Isbn = table.Column<string>(maxLength: 450, nullable: false),
+                    IdCategory = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(maxLength: 100, nullable: false),
+                    Author = table.Column<string>(maxLength: 75, nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Synopsis = table.Column<string>(maxLength: 255, nullable: true),
+                    Image = table.Column<string>(nullable: true),
+                    Price = table.Column<float>(nullable: false),
+                    Stock = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Books", x => x.Isbn);
+                    table.ForeignKey(
+                        name: "FK_Books_Categories_IdCategory",
+                        column: x => x.IdCategory,
+                        principalTable: "Categories",
+                        principalColumn: "IdCategory",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sales",
                 columns: table => new
                 {
@@ -79,18 +72,17 @@ namespace BooKeeper.Web.Migrations
                     Province = table.Column<string>(maxLength: 60, nullable: true),
                     IdUser = table.Column<int>(nullable: false),
                     Telephone = table.Column<string>(nullable: true),
-                    DeliveryData = table.Column<string>(nullable: true),
-                    IdUser1 = table.Column<int>(nullable: true)
+                    DeliveryData = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sales", x => x.SaleId);
                     table.ForeignKey(
-                        name: "FK_Sales_Users_IdUser1",
-                        column: x => x.IdUser1,
+                        name: "FK_Sales_Users_IdUser",
+                        column: x => x.IdUser,
                         principalTable: "Users",
                         principalColumn: "IdUser",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,13 +92,13 @@ namespace BooKeeper.Web.Migrations
                     IdSaleDetail = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SaleId = table.Column<int>(nullable: false),
-                    Isbn = table.Column<string>(nullable: true)
+                    Isbn = table.Column<string>(maxLength: 450, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SaleDetails", x => x.IdSaleDetail);
                     table.ForeignKey(
-                        name: "FK_SaleDetails_Books_IsbnBookIsbn",
+                        name: "FK_SaleDetails_Books_Isbn",
                         column: x => x.Isbn,
                         principalTable: "Books",
                         principalColumn: "Isbn",
@@ -120,14 +112,14 @@ namespace BooKeeper.Web.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Books_IdCategory1",
+                name: "IX_Books_IdCategory",
                 table: "Books",
-                column: "IdCategory1");
+                column: "IdCategory");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SaleDetails_IsbnBookIsbn",
+                name: "IX_SaleDetails_Isbn",
                 table: "SaleDetails",
-                column: "IsbnBookIsbn");
+                column: "Isbn");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SaleDetails_SaleId",
@@ -135,69 +127,27 @@ namespace BooKeeper.Web.Migrations
                 column: "SaleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sales_IdUser1",
+                name: "IX_Sales_IdUser",
                 table: "Sales",
-                column: "IdUser1");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Books_Categories_IdCategory1",
-                table: "Books",
-                column: "IdCategory1",
-                principalTable: "Categories",
-                principalColumn: "IdCategory",
-                onDelete: ReferentialAction.Restrict);
+                column: "IdUser");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Books_Categories_IdCategory1",
-                table: "Books");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
-
             migrationBuilder.DropTable(
                 name: "SaleDetails");
+
+            migrationBuilder.DropTable(
+                name: "Books");
 
             migrationBuilder.DropTable(
                 name: "Sales");
 
             migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Books_IdCategory1",
-                table: "Books");
-
-            migrationBuilder.DropColumn(
-                name: "IdCategory1",
-                table: "Books");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
-                table: "Books",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldMaxLength: 100);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Synopsis",
-                table: "Books",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldMaxLength: 255,
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Author",
-                table: "Books",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldMaxLength: 75);
         }
     }
 }

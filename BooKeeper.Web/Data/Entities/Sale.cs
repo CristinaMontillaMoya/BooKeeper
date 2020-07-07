@@ -11,15 +11,23 @@ namespace BooKeeper.Web.Data.Entities
     {
         [Key]
         public int SaleId { get; set; }
+
         public DateTime Date { get; set; }
+
         [MaxLength(25, ErrorMessage = "The field {0} only can contain {1} characters length.")]
         public string Country { get; set; }
+
         [MaxLength(60, ErrorMessage = "The field {0} only can contain {1} characters length.")]
         public string Province { get; set; }
+        
+        [ForeignKey("UserFK")]
         public int IdUser { get; set; }
+        
         public string Telephone { get; set; }
+        
         public string DeliveryData { get; set; }
-        public virtual User Id { get; set; }
+        
+        public virtual User UserFK { get; set; }
 
     }
 }

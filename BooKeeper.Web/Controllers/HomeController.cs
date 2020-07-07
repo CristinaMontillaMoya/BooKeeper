@@ -28,31 +28,29 @@ namespace BooKeeper.Web.Controllers
             {
                 Name = "Terror"
             };
-        Book testBook = new Book()
-        {
-            Isbn = "123124hb4j3bjh",
-            Title = "Prueba",
-            Author = "Autor",
-            Date = DateTime.Now,
-            Synopsis = null,
-            Image = null,
-            Price = 10,
-            IdCategory = 1,
-            Stock = 1
-
-        };
+            Book testBook = new Book()
+            {
+                Isbn = "123124hb4j3bjt",
+                Title = "Prueba",
+                Author = "Autor",
+                Date = DateTime.Now,
+                Synopsis = null,
+                Image = null,
+                Price = 10,
+                IdCategory = 1,
+                Stock = 1
+            };
 
             cntx.Categories.Add(test);
-            if (cntx.SaveChanges() == 1)
+            if(cntx.SaveChanges() == 1)
             {
                 Console.WriteLine(testBook.Author);
                 cntx.Books.Add(testBook);
                 cntx.SaveChanges();
             }
-            else
-            {
-                Console.WriteLine(testBook.IdCategory);
-            }
+            
+            Console.WriteLine(testBook.IdCategory);
+
             return View();
         }
 

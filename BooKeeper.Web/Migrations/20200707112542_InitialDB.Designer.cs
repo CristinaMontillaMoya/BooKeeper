@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooKeeper.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200706112432_ModifyEntities")]
-    partial class ModifyEntities
+    [Migration("20200707112542_InitialDB")]
+    partial class InitialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,8 @@ namespace BooKeeper.Web.Migrations
             modelBuilder.Entity("BooKeeper.Web.Data.Entities.Book", b =>
                 {
                     b.Property<string>("Isbn")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.Property<string>("Author")
                         .IsRequired()
@@ -35,9 +36,6 @@ namespace BooKeeper.Web.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("IdCategory")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdCategory1")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
@@ -60,7 +58,7 @@ namespace BooKeeper.Web.Migrations
 
                     b.HasKey("Isbn");
 
-                    b.HasIndex("IdCategory1");
+                    b.HasIndex("IdCategory");
 
                     b.ToTable("Books");
                 });
@@ -102,9 +100,6 @@ namespace BooKeeper.Web.Migrations
                     b.Property<int>("IdUser")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdUser1")
-                        .HasColumnType("int");
-
                     b.Property<string>("Province")
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
@@ -114,7 +109,7 @@ namespace BooKeeper.Web.Migrations
 
                     b.HasKey("SaleId");
 
-                    b.HasIndex("IdUser1");
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Sales");
                 });
@@ -127,17 +122,15 @@ namespace BooKeeper.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Isbn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IsbnBookIsbn")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.Property<int>("SaleId")
                         .HasColumnType("int");
 
                     b.HasKey("IdSaleDetail");
 
-                    b.HasIndex("IsbnBookIsbn");
+                    b.HasIndex("Isbn");
 
                     b.HasIndex("SaleId");
 
@@ -176,23 +169,27 @@ namespace BooKeeper.Web.Migrations
 
             modelBuilder.Entity("BooKeeper.Web.Data.Entities.Book", b =>
                 {
-                    b.HasOne("BooKeeper.Web.Data.Entities.Category", "Id")
+                    b.HasOne("BooKeeper.Web.Data.Entities.Category", "CategoryFK")
                         .WithMany()
-                        .HasForeignKey("IdCategory1");
+                        .HasForeignKey("IdCategory")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BooKeeper.Web.Data.Entities.Sale", b =>
                 {
-                    b.HasOne("BooKeeper.Web.Data.Entities.User", "Id")
+                    b.HasOne("BooKeeper.Web.Data.Entities.User", "UserFK")
                         .WithMany()
-                        .HasForeignKey("IdUser1");
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BooKeeper.Web.Data.Entities.SaleDetail", b =>
                 {
-                    b.HasOne("BooKeeper.Web.Data.Entities.Book", "IsbnBook")
+                    b.HasOne("BooKeeper.Web.Data.Entities.Book", "IsbnFK")
                         .WithMany()
-                        .HasForeignKey("IsbnBookIsbn");
+                        .HasForeignKey("Isbn");
 
                     b.HasOne("BooKeeper.Web.Data.Entities.Sale", "Sale")
                         .WithMany()
