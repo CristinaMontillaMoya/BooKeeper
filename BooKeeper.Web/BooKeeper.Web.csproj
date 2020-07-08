@@ -17,9 +17,12 @@
     <Compile Remove="Migrations\20200706112432_ModifyEntities.Designer.cs" />
     <Compile Remove="Migrations\20200706112902_Prueba1.cs" />
     <Compile Remove="Migrations\20200706112902_Prueba1.Designer.cs" />
+    <Compile Remove="Migrations\20200708114018_IdentityUser.cs" />
+    <Compile Remove="Migrations\20200708114018_IdentityUser.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">

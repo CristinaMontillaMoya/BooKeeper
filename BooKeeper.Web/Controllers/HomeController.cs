@@ -37,7 +37,9 @@ namespace BooKeeper.Web.Controllers
                 Synopsis = null,
                 Image = null,
                 Price = 10,
-                IdCategory = 1,
+                Category = new Category(){
+                    Name = "Aventuras"
+                },
                 Stock = 1
             };
 
@@ -49,7 +51,7 @@ namespace BooKeeper.Web.Controllers
                 cntx.SaveChanges();
             }
             
-            Console.WriteLine(testBook.IdCategory);
+            Console.WriteLine(testBook.Category);
 
             return View();
         }
