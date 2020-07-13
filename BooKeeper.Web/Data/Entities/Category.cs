@@ -7,13 +7,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BooKeeper.Web.Data.Entities
 {
-    public class Category
+    public class Category : IEntity
     {
-        [Key]
-        public int IdCategory { get; set; }
+        public int Id { get; set; }
 
         [MaxLength (30, ErrorMessage = "The field {0} only can contain {1} characters length")]
         [Required]
         public string Name { get; set; }
+        
     }
 }

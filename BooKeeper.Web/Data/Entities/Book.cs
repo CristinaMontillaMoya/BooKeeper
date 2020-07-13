@@ -7,9 +7,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BooKeeper.Web.Data.Entities
 {
-    public class Book
+    public class Book : IEntity
     {
-        [Key]
+        public int Id { get; set; }
+
         [MaxLength(450)]
         public string Isbn { get; set; }
 
@@ -35,5 +36,6 @@ namespace BooKeeper.Web.Data.Entities
         public float Price { get; set; }
 
         public int Stock { get; set; }
+        
     }
 }

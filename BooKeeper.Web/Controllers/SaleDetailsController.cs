@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using BooKeeper.Web.Data;
-using BooKeeper.Web.Data.Entities;
-
-namespace BooKeeper.Web.Controllers
+﻿namespace BooKeeper.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using BooKeeper.Web.Data;
+    using BooKeeper.Web.Data.Entities;
+
     public class SaleDetailsController : Controller
     {
         private readonly DataContext _context;
@@ -34,7 +34,7 @@ namespace BooKeeper.Web.Controllers
             }
 
             var saleDetail = await _context.SaleDetails
-                .FirstOrDefaultAsync(m => m.IdSaleDetail == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (saleDetail == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace BooKeeper.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdSaleDetail")] SaleDetail saleDetail)
+        public async Task<IActionResult> Create([Bind("Id")] SaleDetail saleDetail)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,9 @@ namespace BooKeeper.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdSaleDetail")] SaleDetail saleDetail)
+        public async Task<IActionResult> Edit(int id, [Bind("Id")] SaleDetail saleDetail)
         {
-            if (id != saleDetail.IdSaleDetail)
+            if (id != saleDetail.Id)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace BooKeeper.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SaleDetailExists(saleDetail.IdSaleDetail))
+                    if (!SaleDetailExists(saleDetail.Id))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace BooKeeper.Web.Controllers
             }
 
             var saleDetail = await _context.SaleDetails
-                .FirstOrDefaultAsync(m => m.IdSaleDetail == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (saleDetail == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace BooKeeper.Web.Controllers
 
         private bool SaleDetailExists(int id)
         {
-            return _context.SaleDetails.Any(e => e.IdSaleDetail == id);
+            return _context.SaleDetails.Any(e => e.Id == id);
         }
     }
 }

@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿
 
 namespace BooKeeper.Web.Data.Entities
 {
-    public class Sale
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    public class Sale : IEntity
     {
-        [Key]
-        public int SaleId { get; set; }
+        public int Id { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -25,6 +25,6 @@ namespace BooKeeper.Web.Data.Entities
         public string DeliveryData { get; set; }
         
         public User User { get; set; }
-
+        
     }
 }

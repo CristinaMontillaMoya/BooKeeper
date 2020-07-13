@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using BooKeeper.Web.Data;
-using BooKeeper.Web.Data.Entities;
-
-namespace BooKeeper.Web.Controllers
+﻿namespace BooKeeper.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using BooKeeper.Web.Data;
+    using BooKeeper.Web.Data.Entities;
+
     public class BooksController : Controller
     {
         private readonly DataContext _context;
@@ -26,7 +26,7 @@ namespace BooKeeper.Web.Controllers
         }
 
         // GET: Books/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -34,7 +34,7 @@ namespace BooKeeper.Web.Controllers
             }
 
             var book = await _context.Books
-                .FirstOrDefaultAsync(m => m.Isbn == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (book == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace BooKeeper.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Isbn,Title,Author,Date,Synopsis,Image,Price,Stock")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,Isbn,Title,Author,Date,Synopsis,Image,Price,Stock")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace BooKeeper.Web.Controllers
         }
 
         // GET: Books/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -86,9 +86,9 @@ namespace BooKeeper.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Isbn,Title,Author,Date,Synopsis,Image,Price,Stock")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Isbn,Title,Author,Date,Synopsis,Image,Price,Stock")] Book book)
         {
-            if (id != book.Isbn)
+            if (id != book.Id)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace BooKeeper.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookExists(book.Isbn))
+                    if (!BookExists(book.Id))
                     {
                         return NotFound();
                     }
@@ -117,7 +117,7 @@ namespace BooKeeper.Web.Controllers
         }
 
         // GET: Books/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -125,7 +125,7 @@ namespace BooKeeper.Web.Controllers
             }
 
             var book = await _context.Books
-                .FirstOrDefaultAsync(m => m.Isbn == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (book == null)
             {
                 return NotFound();
@@ -137,7 +137,7 @@ namespace BooKeeper.Web.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var book = await _context.Books.FindAsync(id);
             _context.Books.Remove(book);
@@ -145,9 +145,9 @@ namespace BooKeeper.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BookExists(string id)
+        private bool BookExists(int id)
         {
-            return _context.Books.Any(e => e.Isbn == id);
+            return _context.Books.Any(e => e.Id == id);
         }
     }
 }

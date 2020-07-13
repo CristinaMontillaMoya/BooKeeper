@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace BooKeeper.Web.Data.Entities
 {
-    public class SaleDetail
+    public class SaleDetail : IEntity
     {
-        [Key]
-        public int IdSaleDetail { get; set; }
-
+        public int Id { get; set; }
+     
         public Sale Sale { get; set; }
         
         public Book Isbn { get; set; }
-
     }
 }
