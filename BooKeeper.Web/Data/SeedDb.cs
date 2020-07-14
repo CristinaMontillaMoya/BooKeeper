@@ -1,6 +1,7 @@
 ﻿
 namespace BooKeeper.Web.Data
 {
+    using BooKeeper.Web.Helpers;
     using Entities;
     using Microsoft.AspNetCore.Identity;
     using System;
@@ -12,12 +13,12 @@ namespace BooKeeper.Web.Data
         private readonly DataContext context;
         private Random random;
 
-        public UserManager<User> UserManager { get; }
+        public IUserHelper UserHelper { get; }
 
-        public SeedDb(DataContext context, UserManager<User> userManager)
+        public SeedDb(DataContext context, IUserHelper userHelper)
         {
             this.context = context;
-            UserManager = userManager;
+            UserHelper = userHelper;
             this.random = new Random();
         }
 
@@ -25,7 +26,7 @@ namespace BooKeeper.Web.Data
         {
             await this.context.Database.EnsureCreatedAsync();
 
-            var user = this.UserManager.Users.FirstOrDefault();
+            var user = this.UserHelper.FindUsers();
             if (user == null)
             {
                 var user1 = new User
@@ -44,14 +45,14 @@ namespace BooKeeper.Web.Data
                     UserName = "daniel.c.santamaria@gmail.com"
                 };
 
-                var result1 = await this.UserManager.CreateAsync(user1, "123456");
+                var result1 = await this.UserHelper.AddUserAsync(user1, "123456");
 
                 if (result1 != IdentityResult.Success)
                 {
                     throw new InvalidOperationException("Could not create the user" + user1.Name + " in seeder");
                 }
 
-                var result2 = await this.UserManager.CreateAsync(user2, "654321");
+                var result2 = await this.UserHelper.AddUserAsync(user2, "654321");
 
                 if (result2 != IdentityResult.Success)
                 {
@@ -97,7 +98,7 @@ namespace BooKeeper.Web.Data
 
             if (!this.context.Sales.Any())
             {
-                User salesUser = await this.UserManager.FindByEmailAsync("cristinamontilla.90@gmail.com");
+                User salesUser = await this.UserHelper.GetUserByEmailAsync("cristinamontilla.90@gmail.com");
                 if (salesUser != null)
                 {
                     this.AddSale(new DateTime(2020, 6, 18), "España", "Málaga", "679880055", null, salesUser);
