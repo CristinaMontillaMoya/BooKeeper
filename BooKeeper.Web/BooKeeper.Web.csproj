@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Helpers\**" />
-    <Content Remove="Helpers\**" />
-    <EmbeddedResource Remove="Helpers\**" />
-    <None Remove="Helpers\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Migrations\20200703085526_InitialDb.cs" />
     <Compile Remove="Migrations\20200703085526_InitialDb.Designer.cs" />
     <Compile Remove="Migrations\20200706102826_ModifyEntities.cs" />
