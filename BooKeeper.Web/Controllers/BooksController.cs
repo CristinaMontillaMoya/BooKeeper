@@ -12,17 +12,17 @@
 
     public class BooksController : Controller
     {
-        private readonly DataContext _context;
+        private readonly IBookRepository bookRepository;
 
-        public BooksController(DataContext context)
+        public BooksController(IBookRepository bookRepository)
         {
-            _context = context;
+            this.bookRepository = bookRepository;
         }
 
         // GET: Books
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Books.ToListAsync());
+            return View(bookRepository.GetAll());
         }
 
         // GET: Books/Details/5
@@ -33,8 +33,7 @@
                 return NotFound();
             }
 
-            var book = await _context.Books
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var book = await bookRepository.GetByIdAsync(id.Value);
             if (book == null)
             {
                 return NotFound();
@@ -54,12 +53,11 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Isbn,Title,Author,Date,Synopsis,Image,Price,Stock")] Book book)
+        public async Task<IActionResult> Create(Book book)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
+                await bookRepository.CreateAsync(book);
                 return RedirectToAction(nameof(Index));
             }
             return View(book);
@@ -73,7 +71,7 @@
                 return NotFound();
             }
 
-            var book = await _context.Books.FindAsync(id);
+            var book = await bookRepository.GetByIdAsync(id.Value);
             if (book == null)
             {
                 return NotFound();
@@ -86,7 +84,7 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Isbn,Title,Author,Date,Synopsis,Image,Price,Stock")] Book book)
+        public async Task<IActionResult> Edit(int id, Book book)
         {
             if (id != book.Id)
             {
@@ -97,12 +95,11 @@
             {
                 try
                 {
-                    _context.Update(book);
-                    await _context.SaveChangesAsync();
+                    await bookRepository.UpdateAsync(book);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookExists(book.Id))
+                    if (!await BookExists(book.Id))
                     {
                         return NotFound();
                     }
@@ -124,8 +121,7 @@
                 return NotFound();
             }
 
-            var book = await _context.Books
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var book = await bookRepository.GetByIdAsync(id.Value);
             if (book == null)
             {
                 return NotFound();
@@ -139,15 +135,14 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
+            var book = await bookRepository.GetByIdAsync(id);
+            await bookRepository.DeleteAsync(book);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BookExists(int id)
+        private async Task<bool> BookExists(int id)
         {
-            return _context.Books.Any(e => e.Id == id);
+            return await bookRepository.ExistAsync(id);
         }
     }
 }

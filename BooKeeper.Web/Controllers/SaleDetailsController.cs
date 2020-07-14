@@ -12,17 +12,18 @@
 
     public class SaleDetailsController : Controller
     {
-        private readonly DataContext _context;
+        //TODO: Change contructor for use IRepository
+        private readonly ISaleDetailRepository saleDetailRepository;
 
-        public SaleDetailsController(DataContext context)
+        public SaleDetailsController(ISaleDetailRepository saleDetailRepository)
         {
-            _context = context;
+            this.saleDetailRepository = saleDetailRepository;
         }
 
         // GET: SaleDetails
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.SaleDetails.ToListAsync());
+            return View(saleDetailRepository.GetAll());
         }
 
         // GET: SaleDetails/Details/5
@@ -33,8 +34,7 @@
                 return NotFound();
             }
 
-            var saleDetail = await _context.SaleDetails
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var saleDetail = await saleDetailRepository.GetByIdAsync(id.Value);
             if (saleDetail == null)
             {
                 return NotFound();
@@ -54,12 +54,11 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] SaleDetail saleDetail)
+        public async Task<IActionResult> Create(SaleDetail saleDetail)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(saleDetail);
-                await _context.SaveChangesAsync();
+                await this.saleDetailRepository.CreateAsync(saleDetail);
                 return RedirectToAction(nameof(Index));
             }
             return View(saleDetail);
@@ -73,7 +72,7 @@
                 return NotFound();
             }
 
-            var saleDetail = await _context.SaleDetails.FindAsync(id);
+            var saleDetail = await this.saleDetailRepository.GetByIdAsync(id.Value);
             if (saleDetail == null)
             {
                 return NotFound();
@@ -86,7 +85,7 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] SaleDetail saleDetail)
+        public async Task<IActionResult> Edit(int id, SaleDetail saleDetail)
         {
             if (id != saleDetail.Id)
             {
@@ -97,12 +96,11 @@
             {
                 try
                 {
-                    _context.Update(saleDetail);
-                    await _context.SaveChangesAsync();
+                    await this.saleDetailRepository.UpdateAsync(saleDetail);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SaleDetailExists(saleDetail.Id))
+                    if (! await SaleDetailExists(saleDetail.Id))
                     {
                         return NotFound();
                     }
@@ -124,8 +122,7 @@
                 return NotFound();
             }
 
-            var saleDetail = await _context.SaleDetails
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var saleDetail = await this.saleDetailRepository.GetByIdAsync(id.Value);
             if (saleDetail == null)
             {
                 return NotFound();
@@ -139,15 +136,14 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var saleDetail = await _context.SaleDetails.FindAsync(id);
-            _context.SaleDetails.Remove(saleDetail);
-            await _context.SaveChangesAsync();
+            var saleDetail = await this.saleDetailRepository.GetByIdAsync(id);
+            await this.saleDetailRepository.DeleteAsync(saleDetail);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SaleDetailExists(int id)
+        private async Task<bool> SaleDetailExists(int id)
         {
-            return _context.SaleDetails.Any(e => e.Id == id);
+            return await saleDetailRepository.ExistAsync(id);
         }
     }
 }

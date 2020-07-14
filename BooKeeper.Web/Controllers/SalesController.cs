@@ -12,17 +12,17 @@
 
     public class SalesController : Controller
     {
-        private readonly DataContext _context;
+        private readonly ISaleRepository saleRepository;
 
-        public SalesController(DataContext context)
+        public SalesController(ISaleRepository saleRepository)
         {
-            _context = context;
+            this.saleRepository = saleRepository;
         }
 
         // GET: Sales
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Sales.ToListAsync());
+            return View(saleRepository.GetAll());
         }
 
         // GET: Sales/Details/5
@@ -33,8 +33,7 @@
                 return NotFound();
             }
 
-            var sale = await _context.Sales
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var sale = await saleRepository.GetByIdAsync(id.Value);
             if (sale == null)
             {
                 return NotFound();
@@ -54,12 +53,11 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,Country,Province,Telephone,DeliveryData")] Sale sale)
+        public async Task<IActionResult> Create(Sale sale)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(sale);
-                await _context.SaveChangesAsync();
+                await saleRepository.CreateAsync(sale);
                 return RedirectToAction(nameof(Index));
             }
             return View(sale);
@@ -73,7 +71,7 @@
                 return NotFound();
             }
 
-            var sale = await _context.Sales.FindAsync(id);
+            var sale = await saleRepository.GetByIdAsync(id.Value);
             if (sale == null)
             {
                 return NotFound();
@@ -86,7 +84,7 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Country,Province,Telephone,DeliveryData")] Sale sale)
+        public async Task<IActionResult> Edit(int id, Sale sale)
         {
             if (id != sale.Id)
             {
@@ -97,12 +95,11 @@
             {
                 try
                 {
-                    _context.Update(sale);
-                    await _context.SaveChangesAsync();
+                    await saleRepository.UpdateAsync(sale);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SaleExists(sale.Id))
+                    if (!await SaleExists(sale.Id))
                     {
                         return NotFound();
                     }
@@ -123,9 +120,8 @@
             {
                 return NotFound();
             }
-
-            var sale = await _context.Sales
-                .FirstOrDefaultAsync(m => m.Id == id);
+            
+            var sale = await saleRepository.GetByIdAsync(id.Value);
             if (sale == null)
             {
                 return NotFound();
@@ -139,15 +135,14 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var sale = await _context.Sales.FindAsync(id);
-            _context.Sales.Remove(sale);
-            await _context.SaveChangesAsync();
+            var sale = await saleRepository.GetByIdAsync(id);
+            await saleRepository.DeleteAsync(sale);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SaleExists(int id)
+        private async Task<bool> SaleExists(int id)
         {
-            return _context.Sales.Any(e => e.Id == id);
+            return await saleRepository.ExistAsync(id);
         }
     }
 }
