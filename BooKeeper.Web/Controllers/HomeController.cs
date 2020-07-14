@@ -24,35 +24,6 @@ namespace BooKeeper.Web.Controllers
 
         public IActionResult Index()
         {
-            Category test = new Category()
-            {
-                Name = "Terror"
-            };
-            Book testBook = new Book()
-            {
-                Isbn = "123124hb4j3bjt",
-                Title = "Prueba",
-                Author = "Autor",
-                Date = DateTime.Now,
-                Synopsis = null,
-                Image = null,
-                Price = 10,
-                Category = new Category(){
-                    Name = "Aventuras"
-                },
-                Stock = 1
-            };
-
-            cntx.Categories.Add(test);
-            if(cntx.SaveChanges() == 1)
-            {
-                Console.WriteLine(testBook.Author);
-                cntx.Books.Add(testBook);
-                cntx.SaveChanges();
-            }
-            
-            Console.WriteLine(testBook.Category);
-
             return View();
         }
 
