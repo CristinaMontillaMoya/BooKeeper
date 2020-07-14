@@ -7,7 +7,7 @@ namespace BooKeeper.Web.Helpers
     public interface IUserHelper
     {
         User FindUsers();
-
+        //Hola
         Task<User> GetUserByEmailAsync(string email);
 
         Task<IdentityResult> AddUserAsync(User user, string password);

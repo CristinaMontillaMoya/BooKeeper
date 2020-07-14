@@ -7,6 +7,7 @@
 
 	public class UserHelper : IUserHelper
 	{
+		//Hola
 		private readonly UserManager<User> userManager;
 
 		public UserHelper(UserManager<User> userManager)
