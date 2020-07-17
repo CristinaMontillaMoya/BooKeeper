@@ -9,6 +9,8 @@
     using Microsoft.EntityFrameworkCore;
     using BooKeeper.Web.Data;
     using BooKeeper.Web.Data.Entities;
+    using BooKeeper.Web.Models;
+    using System.IO;
 
     public class BooksController : Controller
     {
@@ -53,14 +55,46 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Book book)
+        public async Task<IActionResult> Create(BookViewModel view)
         {
             if (ModelState.IsValid)
             {
+                var path = string.Empty;
+
+                if (view.ImageFile != null && view.ImageFile.Length > 0)
+                {
+                    path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Books", view.ImageFile.FileName);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await view.ImageFile.CopyToAsync(stream);
+                    }
+
+                    path = $"~/images/Books/{view.ImageFile.FileName}";
+                }
+
+                var book = this.ToBook(view, path);
                 await bookRepository.CreateAsync(book);
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            return View(view);
+        }
+
+        private Book ToBook(BookViewModel view, string path)
+        {
+            return new Book
+            {
+                Id = view.Id,
+                Isbn = view.Isbn,
+                Category = view.Category,
+                Title = view.Title,
+                Author = view.Author,
+                Date = view.Date,
+                Synopsis = view.Synopsis,
+                Image = path,
+                Price = view.Price,
+                Stock = view.Stock
+            };
         }
 
         // GET: Books/Edit/5
