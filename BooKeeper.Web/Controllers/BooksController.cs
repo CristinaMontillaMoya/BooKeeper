@@ -110,7 +110,26 @@
             {
                 return NotFound();
             }
-            return View(book);
+
+            var view = ToBookViewModel(book);
+            return View(view);
+        }
+
+        private BookViewModel ToBookViewModel(Book book)
+        {
+            return new BookViewModel()
+            {
+                Id = book.Id,
+                Isbn = book.Isbn,
+                Category = book.Category,
+                Title = book.Title,
+                Author = book.Author,
+                Date = book.Date,
+                Synopsis = book.Synopsis,
+                Image = book.Image,
+                Price = book.Price,
+                Stock = book.Stock
+            };
         }
 
         // POST: Books/Edit/5
@@ -118,22 +137,34 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Book book)
+        public async Task<IActionResult> Edit(BookViewModel view)
         {
-            if (id != book.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var path = view.Image;
+
+                    if (view.ImageFile != null && view.ImageFile.Length > 0)
+                    {
+                        path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Books", view.ImageFile.FileName);
+
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await view.ImageFile.CopyToAsync(stream);
+                        }
+
+                        path = $"~/images/Books/{view.ImageFile.FileName}";
+                    }
+
+                    var book = this.ToBook(view, path);
+
+
                     await bookRepository.UpdateAsync(book);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await BookExists(book.Id))
+                    if (!await BookExists(view.Id))
                     {
                         return NotFound();
                     }
@@ -144,7 +175,7 @@
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            return View(view);
         }
 
         // GET: Books/Delete/5
