@@ -36,6 +36,17 @@ namespace BooKeeper.Web.Data.Entities
         public float Price { get; set; }
 
         public int Stock { get; set; }
-        
+
+        public string ImageFullPath {
+            get
+            {
+                if (string.IsNullOrEmpty(this.Image))
+                {
+                    return null;
+                }
+
+                return $"https://localhost:5001{this.Image.Substring(1)}";
+            }
+        }
     }
 }

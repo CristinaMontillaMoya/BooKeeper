@@ -20,7 +20,7 @@
         [HttpGet]
         public IActionResult GetBooks()
         {
-            return Ok(bookRepository.GetAll());
+            return Ok(bookRepository.GetAllWithCategories());
         }
     }
 }

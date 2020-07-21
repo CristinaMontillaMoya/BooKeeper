@@ -24,7 +24,7 @@
         // GET: Books
         public IActionResult Index()
         {
-            return View(bookRepository.GetAll());
+            return View(bookRepository.GetAll().OrderBy(b =>b.Title));
         }
 
         // GET: Books/Details/5

@@ -78,7 +78,7 @@ namespace BooKeeper.Web.Data
                 {
                     this.AddBook("9788434894396", "La llamada de los muertos", "Laura Gallego García", new DateTime(2003, 3, 12),
                    "Tras la llegada a la torre de Saevin de un muchacho con unos poderes excepcionales, Dana siente que algo" +
-                   "extraño está a punto de suceder...", null, this.random.Next(50), fCategory, 3);
+                   "extraño está a punto de suceder...", "~/images/Books/9788434894396.jpg", this.random.Next(50), fCategory, 3);
                 }
 
                 Category tCategory = context.Categories
@@ -88,10 +88,10 @@ namespace BooKeeper.Web.Data
                 if (tCategory != null)
                 {
                     this.AddBook("8466201130", "Cuentos", "Edgar Allan Poe", new DateTime(2000, 1, 1), "Relatos de terror",
-                    null, this.random.Next(50), tCategory, 26);
+                    "~/images/Books/CUENTOS-E-A-POE-ISLA-MISTERIOSA-i1n42735.jpg", this.random.Next(50), tCategory, 26);
                     this.AddBook("8423927687", "Si quieres pasar miedo", "Angela Sommer-Bodenburg", new DateTime(1987, 1, 21),
                     "¿Hay algo peor que estar enfermo en la cama y aburrirse? Para evitarlo, Florián pide a sus padres y a su" +
-                    "abuela que le cuenten historias de miedo", null, this.random.Next(50), tCategory, 17);
+                    "abuela que le cuenten historias de miedo", "~/ images / Books / libro01.jfif", this.random.Next(50), tCategory, 17);
                 }
                 await this.context.SaveChangesAsync();
             }
