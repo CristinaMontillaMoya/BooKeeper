@@ -20,7 +20,7 @@
         [HttpGet]
         public IActionResult GetSaleDetails()
         {
-            return Ok(saleDetailRepository.GetAll());
+            return Ok(saleDetailRepository.GetAllWithSaleAndBooks());
         }
     }
 }

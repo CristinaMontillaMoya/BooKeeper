@@ -20,7 +20,7 @@
         [HttpGet]
         public IActionResult GetSales()
         {
-            return Ok(saleRepository.GetAll());
+            return Ok(saleRepository.GetAllWithUsers());
         }
     }
 }
