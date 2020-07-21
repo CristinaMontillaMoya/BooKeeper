@@ -9,7 +9,7 @@
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        public ICommand LoginComamnd => new RelayCommand(Login);
+        public ICommand LoginCommand => new RelayCommand(Login);
 
         private async void Login()
         {
