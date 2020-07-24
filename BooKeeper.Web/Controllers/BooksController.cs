@@ -63,14 +63,17 @@
 
                 if (view.ImageFile != null && view.ImageFile.Length > 0)
                 {
-                    path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Books", view.ImageFile.FileName);
+                    var guid = Guid.NewGuid().ToString();
+                    var file = $"{guid}.png";
+
+                    path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Books", file);
 
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
                         await view.ImageFile.CopyToAsync(stream);
                     }
 
-                    path = $"~/images/Books/{view.ImageFile.FileName}";
+                    path = $"~/images/Books/{file}";
                 }
 
                 var book = this.ToBook(view, path);
@@ -147,14 +150,17 @@
 
                     if (view.ImageFile != null && view.ImageFile.Length > 0)
                     {
-                        path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Books", view.ImageFile.FileName);
+                        var guid = Guid.NewGuid().ToString();
+                        var file = $"{guid}.png";
+
+                        path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Books", file);
 
                         using (var stream = new FileStream(path, FileMode.Create))
                         {
                             await view.ImageFile.CopyToAsync(stream);
                         }
 
-                        path = $"~/images/Books/{view.ImageFile.FileName}";
+                        path = $"~/images/Books/{file}";
                     }
 
                     var book = this.ToBook(view, path);
