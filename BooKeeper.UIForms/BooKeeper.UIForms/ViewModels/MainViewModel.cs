@@ -2,11 +2,25 @@
 {
     public class MainViewModel
     {
+        private static MainViewModel singleton;
+
         public LoginViewModel Login { get; set; }
+
+        public BooksViewModel Books { get; set; }
 
         public MainViewModel()
         {
-            this.Login = new LoginViewModel();
+            singleton = this;
+        }
+
+        public static MainViewModel GetSingleton()
+        {
+            if(singleton == null)
+            {
+                return new MainViewModel();
+            }
+
+            return singleton;
         }
     }
 }

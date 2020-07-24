@@ -1,5 +1,6 @@
 ﻿namespace BooKeeper.UIForms.ViewModels
 {
+    using BooKeeper.UIForms.Views;
     using GalaSoft.MvvmLight.Command;
     using System;
     using System.Windows.Input;
@@ -11,6 +12,11 @@
         public string Password { get; set; }
         public ICommand LoginCommand => new RelayCommand(Login);
 
+        public LoginViewModel()
+        {
+            
+        }
+        
         private async void Login()
         {
             Console.WriteLine("Entra en el evento");
@@ -35,11 +41,8 @@
                 return;
             }
 
-            await Application.Current.MainPage.DisplayAlert(
-                    "Error",
-                    "Fuck yeah!!!",
-                    "Accept");
-
+            MainViewModel.GetSingleton().Books = new BooksViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new BooksPage());
         }
     }
 }

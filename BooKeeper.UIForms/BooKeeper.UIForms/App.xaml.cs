@@ -1,4 +1,5 @@
-﻿using BooKeeper.UIForms.Views;
+﻿using BooKeeper.UIForms.ViewModels;
+using BooKeeper.UIForms.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,7 +12,8 @@ namespace BooKeeper.UIForms
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            MainViewModel.GetSingleton().Login = new LoginViewModel();
+            this.MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()
