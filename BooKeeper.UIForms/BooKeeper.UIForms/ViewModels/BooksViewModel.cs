@@ -28,10 +28,11 @@ namespace BooKeeper.UIForms.ViewModels
         private async void LoadBooks()
         {
             var response = await apiService.GetListAsync<Book>(
-                "https://localhost:5001",
+                "https://bookeeperweb.azurewebsites.net",
                 "/api",
                 "/Books");
-            
+
+            //await Application.Current.MainPage.DisplayAlert("1",response.Message, "ok");
             if (!response.IsSuccess)
             {
                 await Application.Current.MainPage.DisplayAlert(
