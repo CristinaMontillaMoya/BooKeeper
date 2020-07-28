@@ -1,22 +1,26 @@
-﻿
-namespace BooKeeper.UIForms.ViewModels
+﻿namespace BooKeeper.UIForms.ViewModels
 {
     using Common.Models;
     using Common.Services;
-    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Text;
     using Xamarin.Forms;
 
     public class BooksViewModel : BaseViewModel
     {
-        private ApiService apiService;
+        private readonly ApiService apiService;
         private ObservableCollection<Book> books;
-        public ObservableCollection<Book> Books 
-        { 
-            get { return this.books; } 
-            set { this.SetValue(ref this.books, value); } 
+        private bool isRefreshing;
+        public ObservableCollection<Book> Books
+        {
+            get => this.books;
+            set => this.SetValue(ref this.books, value);
+        }
+
+        public bool IsRefreshing
+        {
+            get => this.isRefreshing;
+            set => this.SetValue(ref this.isRefreshing, value);
         }
 
         public BooksViewModel()
@@ -27,12 +31,15 @@ namespace BooKeeper.UIForms.ViewModels
 
         private async void LoadBooks()
         {
+            this.isRefreshing = true;
+
             var response = await apiService.GetListAsync<Book>(
                 "https://bookeeperweb.azurewebsites.net",
                 "/api",
                 "/Books");
 
-            //await Application.Current.MainPage.DisplayAlert("1",response.Message, "ok");
+            this.isRefreshing = false;
+
             if (!response.IsSuccess)
             {
                 await Application.Current.MainPage.DisplayAlert(
