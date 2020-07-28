@@ -31,14 +31,14 @@
 
         private async void LoadBooks()
         {
-            this.isRefreshing = true;
+            this.IsRefreshing = true;
 
             var response = await apiService.GetListAsync<Book>(
                 "https://bookeeperweb.azurewebsites.net",
                 "/api",
                 "/Books");
 
-            this.isRefreshing = false;
+            this.IsRefreshing = false;
 
             if (!response.IsSuccess)
             {

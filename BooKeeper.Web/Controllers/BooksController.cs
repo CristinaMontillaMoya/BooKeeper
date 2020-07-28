@@ -12,6 +12,7 @@
     using BooKeeper.Web.Models;
     using System.IO;
 
+    //[Authorize]
     public class BooksController : Controller
     {
         private readonly IBookRepository bookRepository;
