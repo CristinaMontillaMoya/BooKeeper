@@ -1,16 +1,17 @@
-﻿using BooKeeper.Web.Data.Entities;
-namespace BooKeeper.Web.Models
+﻿namespace BooKeeper.Web.Models
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using System.ComponentModel.DataAnnotations;
+    using Data.Entities;
     using Microsoft.AspNetCore.Http;
 
-    public class BookViewModel : Book
+    public class BookViewModel
     {
+        public Book Book { get; set; }
+
         [Display(Name = "Image")]
         public IFormFile ImageFile { get; set; }
+
+        public int CatId { get; set; }
     }
 }

@@ -16,10 +16,12 @@
     public class BooksController : Controller
     {
         private readonly IBookRepository bookRepository;
+        private readonly DataContext dataContext;
 
-        public BooksController(IBookRepository bookRepository)
+        public BooksController(IBookRepository bookRepository, DataContext dataContext)
         {
             this.bookRepository = bookRepository;
+            this.dataContext = dataContext;
         }
 
         // GET: Books
@@ -48,6 +50,8 @@
         // GET: Books/Create
         public IActionResult Create()
         {
+            List<Category> categories = dataContext.Categories.ToList();
+            ViewBag.CategoriesList = categories;
             return View();
         }
 
@@ -77,7 +81,9 @@
                     path = $"~/images/Books/{file}";
                 }
 
-                var book = this.ToBook(view, path);
+                var book = view.Book;
+                book.Category = dataContext.Categories.Where(c => c.Id == view.CatId).FirstOrDefault();
+                book.Image = path;
                 await bookRepository.CreateAsync(book);
                 return RedirectToAction(nameof(Index));
             }
@@ -88,16 +94,16 @@
         {
             return new Book
             {
-                Id = view.Id,
-                Isbn = view.Isbn,
-                Category = view.Category,
-                Title = view.Title,
-                Author = view.Author,
-                Date = view.Date,
-                Synopsis = view.Synopsis,
+                Id = view.Book.Id,
+                Isbn = view.Book.Isbn,
+                Category = view.Book.Category,
+                Title = view.Book.Title,
+                Author = view.Book.Author,
+                Date = view.Book.Date,
+                Synopsis = view.Book.Synopsis,
                 Image = path,
-                Price = view.Price,
-                Stock = view.Stock
+                Price = view.Book.Price,
+                Stock = view.Book.Stock
             };
         }
 
@@ -119,20 +125,22 @@
             return View(view);
         }
 
-        private BookViewModel ToBookViewModel(Book book)
+        private BookViewModel ToBookViewModel(Book b)
         {
             return new BookViewModel()
             {
-                Id = book.Id,
-                Isbn = book.Isbn,
-                Category = book.Category,
-                Title = book.Title,
-                Author = book.Author,
-                Date = book.Date,
-                Synopsis = book.Synopsis,
-                Image = book.Image,
-                Price = book.Price,
-                Stock = book.Stock
+                Book = b
+/*
+                Id = b.Id,
+                Isbn = b.Isbn,
+                Category = b.Category,
+                Title = b.Title,
+                Author = b.Author,
+                Date = b.Date,
+                Synopsis = b.Synopsis,
+                Image = b.Image,
+                Price = b.Price,
+                Stock = b.Stock*/
             };
         }
 
@@ -147,7 +155,7 @@
             {
                 try
                 {
-                    var path = view.Image;
+                    var path = view.Book.Image;
 
                     if (view.ImageFile != null && view.ImageFile.Length > 0)
                     {
@@ -164,14 +172,15 @@
                         path = $"~/images/Books/{file}";
                     }
 
-                    var book = this.ToBook(view, path);
+                    var book = view.Book;
+                    book.Image = path;
 
 
                     await bookRepository.UpdateAsync(book);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await BookExists(view.Id))
+                    if (!await BookExists(view.Book.Id))
                     {
                         return NotFound();
                     }

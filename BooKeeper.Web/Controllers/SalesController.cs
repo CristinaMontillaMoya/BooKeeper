@@ -9,14 +9,17 @@
     using Microsoft.EntityFrameworkCore;
     using BooKeeper.Web.Data;
     using BooKeeper.Web.Data.Entities;
+    using BooKeeper.Web.Helpers;
 
     public class SalesController : Controller
     {
         private readonly ISaleRepository saleRepository;
+        private readonly IUserHelper userHelper;
 
-        public SalesController(ISaleRepository saleRepository)
+        public SalesController(ISaleRepository saleRepository, IUserHelper userHelper)
         {
             this.saleRepository = saleRepository;
+            this.userHelper = userHelper;
         }
 
         // GET: Sales
@@ -57,6 +60,7 @@
         {
             if (ModelState.IsValid)
             {
+                sale.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                 await saleRepository.CreateAsync(sale);
                 return RedirectToAction(nameof(Index));
             }
