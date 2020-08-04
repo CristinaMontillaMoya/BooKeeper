@@ -10,7 +10,9 @@
     using BooKeeper.Web.Data;
     using BooKeeper.Web.Data.Entities;
     using BooKeeper.Web.Helpers;
+    using Microsoft.AspNetCore.Authorization;
 
+    [Authorize]
     public class SalesController : Controller
     {
         private readonly ISaleRepository saleRepository;
