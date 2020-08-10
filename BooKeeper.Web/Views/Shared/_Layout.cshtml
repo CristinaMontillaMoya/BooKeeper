@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BooKeeper.Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -36,7 +37,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
-                            <a class="btn btn-warning nav-link text-dark" asp-area="" asp-controller="" asp-action="">Carrito</a>
+                            <a class="btn btn-warning nav-link text-dark" asp-area="" asp-controller="" asp-action=""><i class="fa fa-shopping-cart"></i></a>
                         </li>
                         @if (this.User.Identity.IsAuthenticated)
                         {
