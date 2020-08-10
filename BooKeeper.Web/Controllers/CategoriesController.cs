@@ -9,6 +9,7 @@
     using Microsoft.EntityFrameworkCore;
     using BooKeeper.Web.Data;
     using BooKeeper.Web.Data.Entities;
+    using Microsoft.AspNetCore.Authorization;
 
     public class CategoriesController : Controller
     {
@@ -43,6 +44,7 @@
         }
 
         // GET: Categories/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -64,6 +66,7 @@
         }
 
         // GET: Categories/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -114,6 +117,7 @@
         }
 
         // GET: Categories/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

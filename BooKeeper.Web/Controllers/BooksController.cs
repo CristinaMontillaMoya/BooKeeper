@@ -11,6 +11,7 @@
     using BooKeeper.Web.Data.Entities;
     using BooKeeper.Web.Models;
     using System.IO;
+    using Microsoft.AspNetCore.Authorization;
 
     //[Authorize]
     public class BooksController : Controller
@@ -48,6 +49,7 @@
         }
 
         // GET: Books/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             List<Category> categories = dataContext.Categories.ToList();
@@ -108,6 +110,7 @@
         }
 
         // GET: Books/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -195,6 +198,7 @@
         }
 
         // GET: Books/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

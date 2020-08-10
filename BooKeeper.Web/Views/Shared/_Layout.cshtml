@@ -31,13 +31,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index">Libros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SaleDetails" asp-action="Index">Detalles de venta</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Sales" asp-action="Index">Ventas</a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <a class="btn btn-warning nav-link text-dark" asp-area="" asp-controller="" asp-action="">Carrito</a>
+                        </li>
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
