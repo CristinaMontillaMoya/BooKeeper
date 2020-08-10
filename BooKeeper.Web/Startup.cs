@@ -38,6 +38,13 @@ namespace BooKeeper.Web
             })
         .AddEntityFrameworkStores<DataContext>();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/NotAuthorized";
+                options.AccessDeniedPath = "/Account/NotAuthorized";
+            });
+
+
             services.AddDbContext<DataContext>(cfg =>
             {
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
@@ -80,6 +87,7 @@ namespace BooKeeper.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

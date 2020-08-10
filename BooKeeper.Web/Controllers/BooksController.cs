@@ -7,11 +7,12 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
-    using BooKeeper.Web.Data;
-    using BooKeeper.Web.Data.Entities;
-    using BooKeeper.Web.Models;
+    using Data.Entities;
+    using Models;
+    using Data;
     using System.IO;
     using Microsoft.AspNetCore.Authorization;
+    using Helpers;
 
     //[Authorize]
     public class BooksController : Controller
@@ -36,13 +37,13 @@
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("BookNotFound");
             }
 
             var book = await bookRepository.GetByIdAsync(id.Value);
             if (book == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("BookNotFound");
             }
 
             return View(book);
@@ -115,13 +116,13 @@
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("BookNotFound");
             }
 
             var book = await bookRepository.GetByIdAsync(id.Value);
             if (book == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("BookNotFound");
             }
 
             var view = ToBookViewModel(book);
@@ -185,7 +186,7 @@
                 {
                     if (!await BookExists(view.Book.Id))
                     {
-                        return NotFound();
+                        return new NotFoundViewResult("BookNotFound");
                     }
                     else
                     {
@@ -203,13 +204,13 @@
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("BookNotFound");
             }
 
             var book = await bookRepository.GetByIdAsync(id.Value);
             if (book == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("BookNotFound");
             }
 
             return View(book);
@@ -229,5 +230,11 @@
         {
             return await bookRepository.ExistAsync(id);
         }
+
+        public IActionResult BookNotFound()
+        {
+            return this.View();
+        }
+
     }
 }
