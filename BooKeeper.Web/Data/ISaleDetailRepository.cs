@@ -5,6 +5,6 @@
 
     public interface ISaleDetailRepository : IGenericRepository<SaleDetail>
     {
-        IQueryable GetAllWithSaleAndBooks();
+        IQueryable GetAllWithBooks();
     }
 }

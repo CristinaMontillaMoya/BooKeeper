@@ -13,9 +13,9 @@
             this.context = context;
         }
 
-        public IQueryable GetAllWithSaleAndBooks()
+        public IQueryable GetAllWithBooks()
         {
-            return this.context.SaleDetails.Include(s => s.Sale.User).Include(b =>b.Isbn.Category);
+            return this.context.SaleDetails.Include(b =>b.Isbn.Category);
         }
     }
 }

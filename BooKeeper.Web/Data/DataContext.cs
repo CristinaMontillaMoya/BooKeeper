@@ -15,7 +15,10 @@ namespace BooKeeper.Web.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<SaleDetail> SaleDetails { get; set; }
-        
+
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
+
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {

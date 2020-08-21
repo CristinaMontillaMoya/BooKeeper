@@ -17,6 +17,8 @@ namespace BooKeeper.Web.Data.Entities
         [MaxLength(25, ErrorMessage = "The field {0} only can contain {1} characters length.")]
         public string Country { get; set; }
 
+        public IEnumerable<SaleDetail> saleDetails { get; set; }
+
         [MaxLength(60, ErrorMessage = "The field {0} only can contain {1} characters length.")]
         public string Province { get; set; }
         

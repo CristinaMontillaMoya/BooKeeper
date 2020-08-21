@@ -236,5 +236,11 @@
             return this.View();
         }
 
+        public async Task<IActionResult> BuyBook(int id)
+        {
+            var book = await bookRepository.GetByIdAsync(id);
+            //TODO: Crear objeto ShoopingCart e insertarlo a la BD y se agrega a la vista
+            return null;
+        }
     }
 }

@@ -112,7 +112,7 @@ namespace BooKeeper.Web.Data
                 await this.context.SaveChangesAsync();
             }
 
-            if (!this.context.Sales.Any())
+            /*if (!this.context.Sales.Any())
             {
                 User salesUser = await this.userHelper.GetUserByEmailAsync("cristinamontilla.90@gmail.com");
                 if (salesUser != null)
@@ -154,14 +154,14 @@ namespace BooKeeper.Web.Data
                 }
 
                 await this.context.SaveChangesAsync();
-            }
+            }*/
         }
 
         private void AddSaleDetail(Sale sale, Book book)
         {
             this.context.SaleDetails.Add(new SaleDetail
             {
-                Sale = sale,
+                //Sale = sale,
                 Isbn = book
             });
         }

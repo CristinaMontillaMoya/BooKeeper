@@ -11,7 +11,7 @@ namespace BooKeeper.Web.Data.Entities
     {
         public int Id { get; set; }
      
-        public Sale Sale { get; set; }
+        //public Sale Sale { get; set; }
         
         public Book Isbn { get; set; }
     }

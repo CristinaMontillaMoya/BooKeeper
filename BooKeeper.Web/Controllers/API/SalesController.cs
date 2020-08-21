@@ -24,7 +24,7 @@
         [HttpGet]
         public IActionResult GetSales()
         {
-            return Ok(saleRepository.GetAllWithUsers());
+            return Ok(saleRepository.GetSalesAsync(User.Identity.Name));
         }
     }
 }
